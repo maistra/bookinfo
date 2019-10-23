@@ -94,6 +94,11 @@ spec:
         ports:
         - containerPort: 9080
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-reviews
+---
 ##################################################################################################
 # Reviews service
 ##################################################################################################
@@ -152,6 +157,7 @@ spec:
         app: reviews
         version: v2
     spec:
+      serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
         image: docker.io/maistra/examples-bookinfo-reviews-v2:0.12.0
@@ -176,12 +182,18 @@ spec:
         app: reviews
         version: v3
     spec:
+      serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
         image: docker.io/maistra/examples-bookinfo-reviews-v3:0.12.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-productpage
 ---
 ##################################################################################################
 # Productpage services
@@ -217,6 +229,7 @@ spec:
         app: productpage
         version: v1
     spec:
+      serviceAccountName: bookinfo-productpage
       containers:
       - name: productpage
         image: docker.io/maistra/examples-bookinfo-productpage-v1:0.12.0
